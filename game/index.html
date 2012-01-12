@@ -31,9 +31,9 @@
                     <a href="#" data-role="button" id="newButton">重置游戏</a>
                 <div data-role="fieldinit" id="init_div">
                     <label for="text_total" class="text">游戏总人数</label>
-                    <input type="text" id="text_total" name="total_TextField" />
+                    <input type="number" id="text_total" name="total_TextField" />
                     <label for="text_ghost" class="text">鬼角色数量</label>
-                    <input type="text" id="text_ghost" name="ghost_TextField" />
+                    <input type="number" id="text_ghost" name="ghost_TextField" />
                     <label for="text_tips" class="text">提示信息</label>
                     <input type="text" id="text_tips" name="tips_TextField" />
                     <label for="text_answer" class="text">答案信息</label>
@@ -98,6 +98,10 @@
         			vGhost=$('#text_ghost').val();
         			vTips=$('#text_tips').val();
         			vAnswer=$('#text_answer').val();
+        			$('#text_total').textinput('disable');
+        			$('#text_ghost').textinput('disable');
+        			$('#text_tips').textinput('disable');
+        			$('#text_answer').textinput('disable');
         			vPeople=vTotal-vGhost;
         			vGhostList = new Array(vTotal+1);
         			for (var i=0; i<=vTotal; i++) {
@@ -117,6 +121,10 @@
         			count = 0;
         			vCurrentGhost = 0;
         			vCurrentPeople = 0;
+        			$('#text_total').textinput('enable');
+        			$('#text_ghost').textinput('enable');
+        			$('#text_tips').textinput('enable');
+        			$('#text_answer').textinput('enable');
         			$('#startButton').hide();
         			$('#initButton').show();
         			$('#endButton').hide();
