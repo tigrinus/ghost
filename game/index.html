@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <title>ghost game</title>
+				<meta name="viewport" content="width=device-width, initial-scale=1"> 
         <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.css" />
         <script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
         <script src="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.js"></script>
@@ -29,28 +30,19 @@
             <div data-role="content">
                 <h1>Game</h1>
                     <a href="#" data-role="button" id="newButton">重置游戏</a>
-                <div data-role="fieldinit" id="init_div">
+                    <p>
+                    <a href="#" data-role="button" id="initButton">开始游戏</a>
                     <label for="text_total" class="text">游戏总人数</label>
                     <input type="number" id="text_total" name="total_TextField" />
                     <label for="text_ghost" class="text">鬼角色数量</label>
-                    <input type="number" id="text_ghost" name="ghost_TextField" />
+                    <input type="number" id="text_ghost" name="ghost_TextField" /> 
                     <label for="text_tips" class="text">提示信息</label>
                     <input type="text" id="text_tips" name="tips_TextField" />
                     <label for="text_answer" class="text">答案信息</label>
                     <input type="text" id="text_answer" name="answer_TextField" />
-                </div>
-
-                <div data-role="fieldinit">
-                    <a href="#" data-role="button" id="initButton">开始游戏</a>
-                </div>
-
-                <div data-role="fieldstart">
+                    <label class="text" id="text_count"></label>
                     <a href="#" data-role="button" id="startButton">指定角色</a>
-                </div>
-
-                <div data-role="fieldend">
                     <a href="#" data-role="button" id="endButton">角色确认</a>
-                </div>
 
             </div><!-- /content -->
 
@@ -68,14 +60,15 @@
         				$('#text_answer').show();
         				$('#text_tips').hide();
         			}
+        			$('#endButton .ui-btn-text').text('角色确认');
         			$('#startButton').hide();
         			$('#endButton').show();
         			count = count + 1;
         		}); 
         		$('#endButton').live("click tap", function() {
         			$('#endButton').hide();
-        			$('#startButton').text('第 '+ count+' 位玩家赋予角色');
         			if (count <= (parseInt(vTotal))) {
+        				$('#text_count').html('第 '+ count+' 位玩家赋予角色');
         				$('#startButton').show();
         			} else {
         				$('#startButton').hide();
@@ -88,12 +81,6 @@
         			count = 1;
         			vCurrentGhost = 0;
         			vCurrentPeople = 0;
-        			$('#initButton').hide();
-        			$('#startButton').text('第 '+ count+' 位玩家赋予角色');
-        			$('#startButton').show();
-        			$('#endButton').hide();
-        			$('#text_tips').hide();
-        			$('#text_answer').hide();
         			vTotal=$('#text_total').val();
         			vGhost=$('#text_ghost').val();
         			vTips=$('#text_tips').val();
@@ -115,9 +102,15 @@
         					vCurrentGhost = vCurrentGhost + 1;
         				}
         			}
+        			$('#initButton').hide();
+       				$('#text_count').html('第 '+ count+' 位玩家赋予角色');
+        			$('#startButton').show();
+        			$('#endButton').hide();
+        			$('#text_tips').hide();
+        			$('#text_answer').hide();
+
         		});
         		$('#newButton').live("click tap", function() {
-        			alert("交还裁判");
         			count = 0;
         			vCurrentGhost = 0;
         			vCurrentPeople = 0;
@@ -126,7 +119,6 @@
         			$('#text_tips').textinput('enable');
         			$('#text_answer').textinput('enable');
         			$('#startButton').hide();
-        			$('#initButton').show();
         			$('#endButton').hide();
         			$('#newButton').hide();
         			$('#text_tips').show();
@@ -141,6 +133,7 @@
         				}
         			}
         			alert(vOutput+vAnswer);
+        			$('#initButton').show();
         		});
         </script>
     </body>
