@@ -4,9 +4,9 @@
         <meta charset="utf-8" />
         <title>ghost game</title>
 				<meta name="viewport" content="width=device-width, initial-scale=1"> 
-        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.css" />
-        <script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
-        <script src="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.js"></script>
+        <link rel="stylesheet" href="./jquery.mobile-1.0a2.min.css" />
+        <script src="./jquery-1.4.4.min.js"></script>
+        <script src="./jquery.mobile-1.0a2.min.js"></script>
         <script>
         	var count=1;
         	var vTotal=0;
@@ -21,7 +21,7 @@
     </head>
     <body>
 
-        <div data-role="page" id="page1">
+        <div data-role="page" id="main">
 
             <div data-role="header" data-position="fixed">
             <h1>抓鬼游戏</h1>
@@ -29,8 +29,6 @@
 
             <div data-role="content">
                 <h1>Game</h1>
-                    <a href="#" data-role="button" id="newButton">重置游戏</a>
-                    <p>
                     <a href="#" data-role="button" id="initButton">开始游戏</a>
                     <label for="text_total" class="text">游戏总人数</label>
                     <input type="number" id="text_total" name="total_TextField" />
@@ -41,43 +39,39 @@
                     <label for="text_answer" class="text">答案信息</label>
                     <input type="text" id="text_answer" name="answer_TextField" />
                     <label class="text" id="text_count"></label>
-                    <a href="#" data-role="button" id="startButton">指定角色</a>
-                    <a href="#" data-role="button" id="endButton">角色确认</a>
+                    <a href="#role" data-role="button" id="startButton">指定角色</a>
 
             </div><!-- /content -->
 
         </div><!-- /page -->
+				<div data-role="page" id="role">
+					<div data-role="header">
+						<h1>角色信息</h1>
+					</div>
+					<div data-role="content">
+            <label for="text_tips" class="text">提示信息</label>
+            <label id="role_tips" />tips</label>
+            <label for="text_answer" class="text">答案信息</label>
+            <label id="role_answer" />answer</label>
+            <label class="text" id="role_count"></label>
+            <a href="#main" data-role="button" id="roleButton">角色确认 返回主画面</a>
+          </div>
+          <div>
+						
+				</div><!-- /page role -->
         <script type="text/javascript">
         	$('#startButton').hide();
         	$('#initButton').show();
-        	$('#endButton').hide();
-        	$('#newButton').hide();
-        		$('#startButton').live("click tap", function() {
+        		$('#startButton').live("click", function() {
         			if (vGhostList[count] == true) {
-        				$('#text_answer').hide();
-        				$('#text_tips').show();
+        				$('#role_answer').hide();
+        				$('#role_tips').show();
         			} else {
-        				$('#text_answer').show();
-        				$('#text_tips').hide();
+        				$('#role_answer').show();
+        				$('#role_tips').hide();
         			}
-        			$('#endButton .ui-btn-text').text('角色确认');
-        			$('#startButton').hide();
-        			$('#endButton').show();
-        			count = count + 1;
         		}); 
-        		$('#endButton').live("click tap", function() {
-        			$('#endButton').hide();
-        			if (count <= (parseInt(vTotal))) {
-        				$('#text_count').html('第 '+ count+' 位玩家赋予角色');
-        				$('#startButton').show();
-        			} else {
-        				$('#startButton').hide();
-        				$('#newButton').show();
-        			}
-        			$('#text_tips').hide();
-        			$('#text_answer').hide();
-        		});
-        		$('#initButton').live("click tap", function() {
+        		$('#initButton').live("click", function() {
         			count = 1;
         			vCurrentGhost = 0;
         			vCurrentPeople = 0;
@@ -89,6 +83,8 @@
         			$('#text_ghost').textinput('disable');
         			$('#text_tips').textinput('disable');
         			$('#text_answer').textinput('disable');
+        			$('#role_tips').html(vTips);
+        			$('#role_answer').html(vAnswer);
         			vPeople=vTotal-vGhost;
         			vGhostList = new Array(vTotal+1);
         			for (var i=0; i<=vTotal; i++) {
@@ -105,36 +101,40 @@
         			$('#initButton').hide();
        				$('#text_count').html('第 '+ count+' 位玩家赋予角色');
         			$('#startButton').show();
-        			$('#endButton').hide();
         			$('#text_tips').hide();
         			$('#text_answer').hide();
+        		});
+        		$('#roleButton').live("click", function() {
+        			count = count + 1;
+        			if (count > parseInt(vTotal)) {
+        				alert("交还裁判");
 
-        		});
-        		$('#newButton').live("click tap", function() {
-        			count = 0;
-        			vCurrentGhost = 0;
-        			vCurrentPeople = 0;
-        			$('#text_total').textinput('enable');
-        			$('#text_ghost').textinput('enable');
-        			$('#text_tips').textinput('enable');
-        			$('#text_answer').textinput('enable');
-        			$('#startButton').hide();
-        			$('#endButton').hide();
-        			$('#newButton').hide();
-        			$('#text_tips').show();
-        			$('#text_answer').show();
-        			var vOutput="";
-        			for (var i=1; i<vGhostList.length; i++) {
-        				vOutput=vOutput+i+":"
-        				if (vGhostList[i]==true) {
-        					vOutput=vOutput+"鬼|";
-        				} else {
-        					vOutput=vOutput+"人|";
+        				count = 0;
+        				vCurrentGhost = 0;
+        				vCurrentPeople = 0;
+        				$('#text_total').textinput('enable');
+        				$('#text_ghost').textinput('enable');
+        				$('#text_tips').textinput('enable');
+        				$('#text_answer').textinput('enable');
+        				$('#startButton').hide();
+        				$('#text_tips').show();
+        				$('#text_answer').show();
+        				var vOutput="";
+        				for (var i=1; i<vGhostList.length; i++) {
+        					vOutput=vOutput+i+":"
+        					if (vGhostList[i]==true) {
+        						vOutput=vOutput+"鬼|";
+        					}	 else {
+        						vOutput=vOutput+"人|";
+        					}
         				}
-        			}
-        			alert(vOutput+vAnswer);
-        			$('#initButton').show();
-        		});
+        				alert(vOutput+vAnswer);
+        				$('#initButton').show();
+       					$('#text_count').html('<b>游戏初始化！</b>');
+        			} else {
+       					$('#text_count').html('<b>第 '+ count+' 位玩家赋予角色</b>');
+       				}
+        		}); 
         </script>
     </body>
 </html>
